@@ -1,0 +1,101 @@
+@startuml
+
+component user-service.web.* {
+class UserController {
+  - UserService userService;
+  + SignUpResponse createUser();
+}
+}
+
+component user-service.service.*{
+
+interface  UserService{
+{abstract} SignUpResponse createUser(SignUpRequest signUpRequest);
+}
+
+
+class UserServiceImpl{
+
+- UserRepository userRepository;
+- PasswordEncoder passwordEncoder;
+- JwtService jwtService;
++SignUpResponse createUser(SignUpRequest signUpRequest);
+
+}
+
+
+interface JwtService{
+{abstract} String generateJwtToken(String email);
+}
+
+
+class JwtServiceImpl{
+- String secretKey;
++ String generateJwtToken(String email);
+}
+
+
+}
+
+component user-service.persistence{
+
+class User {
+-Long id;
+-String code;
+-String name;
+-String email;
+-String password;
+-String token;
+-LocalDateTime lastLogin;
+-boolean active;
+-Set<Phone> phones;
++onCreate();
+}
+
+class Phone{
+-Long id;
+-String number;
+-String cityCode;
+-String countryCode;
+-User user;
+  }
+
+interface  UserRepository{
+{abstract}  Optional<User> findByEmail(String email);
+}
+
+class BaseAudit{
+  -LocalDateTime createdAt;
+  -String createdBy;
+  -LocalDateTime updatedAt;
+  -String updatedBy;
+}
+
+
+}
+
+component user-service.share{
+
+interface  UserDtoMapper{
+{abstract}  UserDto toUserDto(User user);
+{abstract}   User toUser(UserDto userDto);
+{abstract} UserDto toUserDto(SignUpRequest signUpRequest);
+{abstract} SignUpResponse toSignUpResponse(User user);
+}
+
+}
+
+UserController --> UserService
+UserServiceImpl --> UserRepository
+UserServiceImpl --> JwtService
+UserServiceImpl --> UserDtoMapper
+
+class UserServiceImpl implements UserService
+class JwtServiceImpl implements JwtService
+class User extends BaseAudit
+class Phone extends BaseAudit
+@enduml
+
+
+
+

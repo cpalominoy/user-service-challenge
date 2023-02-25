@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "b93ce347-e146-400d-9bfe-69d1a112e1ec",
+		"name": "Nisum-Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4942267"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"alfredo Palomino\",\r\n    \"email\":\"alfredo.palomino@gmail.com\",\r\n    \"password\": \"Alfredo123\",\r\n    \"phones\": [\r\n        {\r\n          \"number\": \"987456123\",\r\n          \"cityCode\": \"1\",\r\n          \"countryCode\": \"2\"  \r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9091/nisum/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"nisum",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
